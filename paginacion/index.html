@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="angularjs-starter">
+  
+  <head lang="en">
+    <meta charset="utf-8">
+    <title>Custom Plunker</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="pagination.js"></script>
+    <script src="app.js"></script>
+  </head>
+  
+  <body ng-controller="MainCtrl">
+    <ul>
+      <li ng-repeat="item in data">{{item.name}}</li>
+    </ul>
+    <pagination num-pages="noOfPages" current-page="currentPage" class="pagination"></pagination>
+  </body>
+
+</html>

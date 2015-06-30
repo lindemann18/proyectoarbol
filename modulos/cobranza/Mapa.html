@@ -1,0 +1,139 @@
+<style type="text/css">
+.main-content-inner {float: inherit;}
+.Formulario {margin-top: 3%}
+#map_canvas{height: 300px; width: auto;}
+.feedback-box {
+  
+  padding: 25px;
+  
+  text-align: left;
+  border-radius: 4px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  display: block;
+  z-index: 5;  margin-bottom: 4%;
+  margin-top: 4%}
+
+  .location-providers  {
+  
+  float: left;
+  margin: 1px;
+  line-height: 1.2;
+  min-height: 58px;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  position: relative;
+  min-height: 54px;
+  margin-right: 0.5%
+}
+
+
+.info{margin-bottom: 3%}
+.sizeh5{font-size: 13px}
+.big {
+  width: 871px;
+}
+.Filtros{margin-bottom: 3%; margin-top: 4%;}
+#map_canvas {width: 1112px; height:350px;}
+.bing{height: 400px;}
+#myMap{ height: 380px;}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/loading.css">
+
+
+
+<!-- /section:basics/sidebar -->
+<div class="main-content" >
+	<div class="main-content-inner">
+		<!-- #section:basics/content.breadcrumbs -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Home</a>
+				</li>
+				<li class="active"><a href="#/Tracking">Tracking</a> </i></li>
+				<li class="active">Puntos Por Empleado <i class="fa fa-map-marker"></i></li>
+			</ul><!-- /.breadcrumb -->
+
+		
+
+			<!-- /section:basics/content.searchbox -->
+		</div>
+
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class="page-content Contenedor"  ng-controller="Mapa">
+			<div class="alert alert-danger alert-dismissible col-md-12" role="alert" id="alerta" style="display:none;">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <strong>Atención!</strong> <p id="ErrorTexto"></p>
+			</div>
+			<!-- Contenido-->	
+			<div class="col-md-12 Contenido">
+				<div class="row">
+					<h2 class="text-center">Puntos Por Empleado</h2>
+						
+
+						<div class="col-md-12 Formulario">
+							<form  role="form" name="form" ng-submit="BuscarInformacion()" class="col-md-12">
+								<div class="col-md-2 fecha">
+									<label>Desde: </label>
+									<div class="input-append date" id="fh_inicio" data-date="" data-date-format="dd-mm-yyyy">
+				  					<input class="form-control"  type="text" value="" ng-click="fecha ('fh_inicio')" ng-model="registro.fechainicio" placeholder="Inicio" required readonly id="fh_desde">
+			  					<span class="add-on"><i class="icon-th"></i></span>
+									</div><!-- fh_inicio -->
+								</div><!-- fecha-->
+								<div class="col-md-2">
+									<label>Opción</label>
+									<select ng-model="registro.opcion"
+									ng-options="opcion.num_tipo as opcion.descripcion for opcion in opciones" class="form-control" required required>
+										<option value="">Seleccionar...</option>
+									</select>
+								</div><!-- col-md-3 -->
+								<div class="col-md-2 Botones">
+
+									<input type="submit" class="btn btn-success" value="Buscar">
+									<input type="button" class="btn btn-info" ng-click="RutaTrazada()" value="Rutas" ng-show="mostrarbtnruta!=false">
+								</div><!-- Botones-->
+							</form>
+						</div><!-- formulario -->
+					<div class="col-md-12 Loading" ng-hide="mostrarbuscando != true">
+							<h1 class="text-center">Cargando</h1>
+							<div class="sk-spinner sk-spinner-wandering-cubes">
+						      <div class="sk-cube1"></div>
+						      <div class="sk-cube2"></div>
+						    </div>
+					</div><!-- loading-->
+					<div id="myMap" class="col-md-12" ng-show="mostrarmapa==true"></div><!-- map_canvas -->
+
+					<!-- modal del detalle-->
+						<div class="modal fade" id="modaldetalle">
+					  <div class="modal-dialog">
+					    <div class="modal-content col-md-12">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title text-center">Ruta</h4>
+					      </div>
+					      <div class="modal-body col-md-12">
+					       	<div id='myMap' class="col-md-12 bing"></div>	
+					      </div><!-- modal body-->
+					      <div class="modal-footer col-md-12">
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+					<!-- modal mapa-->
+				</div><!-- row -->
+			</div><!-- Contenido -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+
+<script type="text/javascript">
+	
+</script>

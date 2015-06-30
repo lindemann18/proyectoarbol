@@ -1,0 +1,101 @@
+<style type="text/css">
+.main-content-inner {float: inherit;}
+.Pregunta{margin-bottom: 2%; margin-top: 2%;}
+.Labstyle{text-align: right;}
+</style>
+<!-- /section:basics/sidebar -->
+<div class="main-content">
+	<div class="main-content-inner">
+		<!-- #section:basics/content.breadcrumbs -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Home</a>
+				</li>
+				<li class="" href="">
+					<a href="#/raspberry">Raspberry</a>
+				</li>
+				<li class="">
+					Editar Raspberry
+				</li>
+			</ul><!-- /.breadcrumb -->
+
+		
+
+			<!-- /section:basics/content.searchbox -->
+		</div>
+
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class="page-content Contenedor" >
+			<div class="alert alert-success alert-dismissible" role="alert" id="alerta" style="display:none">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Atención!</strong><p id="msj"> Better check yourself, you're not looking too good.</p>
+		   </div>
+
+			<div class="col-md-3"></div>
+			<div class="col-md-6 Usuario">
+				<div class="row">
+					<form action="" role="form" name="form" ng-submit="EditarRasp()">
+						<legend for="" class="text-center">Registro De Raspberries</legend>
+						<h5 class="text-center">Favor De Llenar Los Campos</h5>
+						<div class="col-md-12 Pregunta">
+							<label for="" class="pull-left col-md-3 Labstyle">Dirección Mac: </label>
+							<div class="col-md-7 ">
+								<input type="text" ng-model="raspberry.num_id" class="form-control pull-left" required>
+							</div>
+							<input type="hidden" ng-model="raspberry.keyx">
+						</div><!-- Pregunta-->
+
+						<div class="col-md-12 Pregunta">
+							<label for="" class="pull-left col-md-3 Labstyle">Descripción: </label>
+							<div class="col-md-7 ">
+								<textarea class="form-control" required ng-model="raspberry.nom_descripcion">{{raspberry.nom_descripcion}}</textarea>
+							</div>
+						</div><!-- Pregunta-->
+
+						<div class="col-md-12 Pregunta">
+							<label for="" class="pull-left col-md-3 Labstyle">Sitio: </label>
+							<div class="col-md-7 ">
+								<select  ng-model="raspberry.id_sitio"
+								ng-options="sitio.num_id as sitio.file_system for sitio in sitios" ng-model="raspberry.id_sitio" required>
+								</select>
+							</div>
+						</div><!-- Pregunta-->
+
+
+						<div class="col-md-12 Pregunta">
+							<label for="" class="pull-left col-md-3 Labstyle">Estado: </label>
+							<div class="col-md-7 ">
+								<select ng-model="raspberry.sn_activo" required>
+									<option value="">Seleccionar</option>
+									<option value="1" ng-selected="raspberry.sn_activo==1">Activo</option>
+									<option value="0" ng-selected="raspberry.sn_activo==0">Inactivo</option>
+								</select>
+							</div>
+						</div><!-- Pregunta-->
+						
+					
+
+						<div class="col-md-12 Pregunta">
+							<div class="col-md-2"></div>
+							<div class="col-md-4">
+								<input type="submit" class="btn btn-success col-md-12" ng-disabled="form.$invalid" value="Guardar">
+							</div>
+
+							<div class="col-md-4">
+								<button class="btn btn-danger col-md-12" ng-click="Volver('raspberry')">Volver</button>
+							</div>
+						</div><!-- Pregunta-->
+					</form>	
+				</div><!-- row -->
+			</div><!-- Usuario -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->

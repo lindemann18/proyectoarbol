@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+   <head>
+      <title></title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+      <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+
+      <script type="text/javascript">
+
+         var map = null;
+         function GetMap() {
+            // Initialize the map
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"),{credentials:"ArsGboj8SpwzBhleSuIQpukCJlCmk0SA4C9TcrXdo7t-zeLlXJSpzKdyG2BI41ew"}); 
+
+            var loc1 = new Microsoft.Maps.Location(33.719753, -117.91225);
+            var loc2 = new Microsoft.Maps.Location(33.993065, -117.943015);
+            var loc3 = new Microsoft.Maps.Location(34.15095, -118.25767);
+            var loc4 = new Microsoft.Maps.Location(33.769753, -117.98925);
+            var loc5 = new Microsoft.Maps.Location(33.983065, -117.9198015);
+            var loc6 = new Microsoft.Maps.Location(34.19095, -118.254544);
+            var loc7 = new Microsoft.Maps.Location(33.729753, -117.989842);
+            var loc8 = new Microsoft.Maps.Location(33.963065, -117.9182345);
+            var loc9 = new Microsoft.Maps.Location(34.19095, -118.2548767);
+
+            // Add a pin to the map
+            var pin1 = new Microsoft.Maps.Pushpin(loc1); 
+            var pin2 = new Microsoft.Maps.Pushpin(loc2); 
+            var pin3 = new Microsoft.Maps.Pushpin(loc3); 
+            var pin4 = new Microsoft.Maps.Pushpin(loc4); 
+            var pin5 = new Microsoft.Maps.Pushpin(loc5); 
+            var pin6 = new Microsoft.Maps.Pushpin(loc6); 
+            var pin7 = new Microsoft.Maps.Pushpin(loc7); 
+            var pin8 = new Microsoft.Maps.Pushpin(loc8); 
+            var pin9 = new Microsoft.Maps.Pushpin(loc9); 
+
+            // Create a polyline
+            var lineVertices = new Array(loc1, loc2, loc3,loc4, loc5, loc6,loc7, loc8, loc9);
+            var line = new Microsoft.Maps.Polyline(lineVertices);
+
+            map.setView({center:loc2, zoom: 9} );
+
+            map.entities.push(line);
+            map.entities.push(pin1);
+            map.entities.push(pin2);
+            map.entities.push(pin3);
+            map.entities.push(pin4);
+            map.entities.push(pin5);
+            map.entities.push(pin6);
+            map.entities.push(pin7);
+            map.entities.push(pin8);
+            map.entities.push(pin9);
+
+         }
+      </script>
+   </head>
+   <body onload="GetMap();">
+      <div id='mapDiv' style="position:relative; width:1000px; height:400px;"></div>
+   </body>
+</html>

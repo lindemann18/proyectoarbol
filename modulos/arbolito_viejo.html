@@ -1,0 +1,195 @@
+<style type="text/css">
+.main-content-inner {float: inherit;}
+.Formulario {margin-top: 3%}
+#map_canvas{height: 300px; width: 500px;}
+.feedback-box {
+  
+  padding: 25px;
+  
+  text-align: left;
+  border-radius: 4px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  display: block;
+  z-index: 5;  margin-bottom: 4%;
+  margin-top: 4%}
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/loading.css">
+
+
+
+<!-- /section:basics/sidebar -->
+<div class="main-content" >
+	<div class="main-content-inner">
+		<!-- #section:basics/content.breadcrumbs -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Home</a>
+				</li>
+				<li class="active">Raspberry</li>
+			</ul><!-- /.breadcrumb -->
+
+		
+
+			<!-- /section:basics/content.searchbox -->
+		</div>
+
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class="page-content Contenedor"  ng-controller="Arbolito">
+			<div class="alert alert-danger alert-dismissible col-md-12" role="alert" id="alerta" style="display:none;">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <strong>Atención!</strong> <p id="ErrorTexto"></p>
+			</div>
+			<!-- Contenido-->	
+			<div class="col-md-12 Contenido">
+				<div class="row">
+					<h1 class="text-center">Búsqueda De Puntos</h1>
+					<div class="col-md-12 Formulario">
+
+							<form  role="form" name="form" ng-submit="BuscarInformacion()">
+							<div class="col-md-2 fecha">
+							<label>Desde: </label>
+							<div class="input-append date" id="fh_inicio" data-date="" data-date-format="dd-mm-yyyy">
+		  					<input class="form-control"  type="text" value="" ng-click="fecha ('fh_inicio')" ng-model="registro.fechainicio" placeholder="Inicio" required readonly id="fh_desde">
+		  					<span class="add-on"><i class="icon-th"></i></span>
+							</div><!-- fecha -->
+							<div></div>
+						</div><!-- fechas -->
+
+						<div class="col-md-2 fecha">
+							<label>Desde: </label>
+							<div class="input-append date" id="fh_final" data-date="" data-date-format="dd-mm-yyyy">
+		  					<input class="form-control"  type="text" value="" ng-click="fecha ('fh_final')" ng-model="registro.fechafinal" placeholder="Inicio" required readonly id="fh_hasta">
+		  					<span class="add-on"><i class="icon-th"></i></span>
+							</div><!-- fecha -->
+						</div><!-- fechas -->
+
+						<div class="col-md-2">
+							<label>Cantidad Puntos</label>
+							<input type="text" placeholder="cantidad" ng-model="registro.cantidad" class="form-control" required ng-keypress="OnlyNumer($event)" numeric>
+						</div><!-- col-md-3 -->
+
+						<div class="col-md-2">
+							<label>Opción</label>
+							<select ng-model="registro.opcion"
+							ng-options="opcion.num_tipo as opcion.descripcion for opcion in opciones" class="form-control" required required>
+								<option value="">Seleccionar</option>
+							</select>
+						</div><!-- col-md-3 -->
+
+						<div class="col-md-2">
+							<input type="submit" value="Buscar" class="btn btn-success">
+						</div>
+						</form>
+					</div><!-- formulario -->
+
+					<div class="col-md-12 Loading" ng-hide="mostrarbuscando != true">
+						<h1 class="text-center">Cargando</h1>
+						<div class="sk-spinner sk-spinner-wandering-cubes">
+					      <div class="sk-cube1"></div>
+					      <div class="sk-cube2"></div>
+					    </div>
+					</div><!-- loading-->
+
+					<div class="col-md-12 ContainerPuntos" ng-hide="mostrarPuntos != true">
+						<h1 class="text-center">Puntos Repetidos</h1>
+						<div class="col-md-12 Puntos" ng-repeat="punto in puntos">
+						<div ng-repeat ="miga in migas"></div>
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+							<div class="panel panel-default">
+					            <div class="panel-heading">
+					                <h4 class="panel-title">
+					                    <a data-toggle="collapse" data-parent="#accordion" href="#{{punto.punteos}}">{{punto.punteos+' punteos iguales '+punto.cantidad}}</a>
+					                </h4>
+					            </div>
+					            <div id="{{punto.punteos}}" class="panel-collapse collapse">
+					                <div class="panel-body">
+					                   <table class="table table-striped">
+					                   		<thead>
+					                   			<tr>
+					                   				<th class="text-center">EMPLEADO</th>
+					                   				<th class="text-center">LATITUD</th>
+					                   				<th class="text-center">LONGITUD</th>
+					                   				<th class="text-center">MAPA</th>
+					                   				<th class="text-center">DETALLE</th>
+					                   			</tr>
+					                   		</thead>
+					                   		<tbody>
+					                   			<tr ng-repeat="miga in migas" class="text-center" ng-if="miga.cantidad==punto.punteos">
+					                   				<td>{{miga.num_empleado}}</td>
+					                   				<td>{{miga.num_latitud}}</td>
+					                   				<td>{{miga.num_longitud}}</td>
+					                   				<td><button type="button" class="btn btn-success map" ng-click="MostrarMapa(miga.num_latitud,miga.num_longitud)"><span class="glyphicon glyphicon-globe"></span></button></td>
+					                   				<td>
+					                   					<button type="button" class="btn btn-info map" ng-click="Detalles(miga.num_latitud,miga.num_longitud,registro.opcion,miga.num_empleado)"><span class="glyphicon glyphicon-list-alt"></span></button>
+					                   				</td>
+					                   			</tr>
+					                   		</tbody>
+					                   </table>
+					                </div>
+					            </div>
+					        </div>
+
+						</div><!-- col-md-8-->
+					</div><!-- puntos-->
+					</div><!-- containerPuntos-->
+					
+					<!-- modal del mapa-->
+						<div class="modal fade" id="modalmapa">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title">Modal title</h4>
+					      </div>
+					      <div class="modal-body">
+					       		<div id="map_canvas"></div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+					<!-- modal mapa-->
+
+					<!-- modal del detalle-->
+						<div class="modal fade" id="modaldetalle">
+					  <div class="modal-dialog">
+					    <div class="modal-content col-md-12">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title text-center">Información</h4>
+					      </div>
+					      <div class="modal-body col-md-12 feedback-box">
+					       		<div class="col-md-12 ">
+					       			<h5 class="text-center">{{empleado.nombre+" "+empleado.apaterno+" "+empleado.amaterno}}</h5>
+  									<h5 class="text-center">Gerente: {{empleado.num_gerente}}</h5>
+  									<h5 class="text-center">Centro: {{empleado.num_centro}}</h5>
+					       		</div>	
+					      </div>
+					      <div class="modal-footer col-md-12">
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+					<!-- modal mapa-->
+
+				</div><!-- row -->
+			</div><!-- Contenido -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+
+<script type="text/javascript">
+	
+</script>

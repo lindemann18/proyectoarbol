@@ -1,0 +1,133 @@
+<style type="text/css">
+.main-content-inner {float: inherit;}
+.Formulario {margin-top: 3%}
+#map_canvas{height: 300px; width: auto;}
+.feedback-box {
+  
+  padding: 25px;
+  
+  text-align: left;
+  border-radius: 4px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  display: block;
+  z-index: 5;  margin-bottom: 4%;
+  margin-top: 4%}
+
+  .location-providers  {
+  
+  float: left;
+  margin: 1px;
+  line-height: 1.2;
+  min-height: 58px;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  position: relative;
+  min-height: 54px;
+  margin-right: 0.5%
+}
+
+
+.info{margin-bottom: 3%}
+.sizeh5{font-size: 13px}
+.big {
+  width: 871px;
+}
+.Filtros{margin-bottom: 3%; margin-top: 4%;}
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/loading.css">
+
+
+
+<!-- /section:basics/sidebar -->
+<div class="main-content" >
+	<div class="main-content-inner">
+		<!-- #section:basics/content.breadcrumbs -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">Home</a>
+				</li>
+				<li class="active">Tracking <i class="fa fa-search-plus"></i></li>
+			</ul><!-- /.breadcrumb -->
+
+		
+
+			<!-- /section:basics/content.searchbox -->
+		</div>
+
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class="page-content Contenedor"  ng-controller="Tracking">
+			<div class="alert alert-danger alert-dismissible col-md-12" role="alert" id="alerta" style="display:none;">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  <strong>Atención!</strong> <p id="ErrorTexto"></p>
+			</div>
+			<!-- Contenido-->	
+			<div class="col-md-12 Contenido">
+				<div class="row">
+					<div class="col-md-12 Contenido" >
+						<h2 class="text-center">Tracking Empleados</h2>
+						<div class="col-md-12 Loading" ng-hide="mostrarbuscando != true">
+							<h1 class="text-center">Cargando</h1>
+							<div class="sk-spinner sk-spinner-wandering-cubes">
+						      <div class="sk-cube1"></div>
+						      <div class="sk-cube2"></div>
+						    </div>
+						</div><!-- loading-->
+						
+						<div class="col-md-12 ContenidoTabla" ng-show="tablamostrar==true">
+							<!-- Filtros -->
+							<div class="col-md-12 Filtros">
+								<div class="col-xs-4">
+					              <label for="search">Búsqueda:</label>
+					              <input ng-model="q" id="search" class="form-control" placeholder="Filtrado">
+					            </div>
+					            <div class="col-xs-4">
+					              <label for="search">Items Por Página:</label>
+					              <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+					            </div>
+							</div><!-- filtros -->
+				            <!-- final de filtros-->
+							<div class="row">
+								<table class="table table-striped col-md-12">
+								<thead>	
+									<tr>
+										<th class="text-center">EMPLEADO</th>
+										<th class="text-center">NOMBRE</th>
+										<th class="text-center">PUESTO</th>
+										<th class="text-center">TRACKING</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr dir-paginate="emp in empleados | filter:q | itemsPerPage: pageSize" current-page="currentPage" class="text-center">
+										<td>{{emp.num_empleado}}</td>
+										<td>{{emp.nom_empleado+ " "+emp.nom_apellidopaterno+" "+emp.nom_apellidomaterno}}</td>
+										<td>{{emp.nombrepuesto}}</td>
+										<td><button class="btn btn-success" ng-click="Mapa(emp.num_empleado)">Puntos</button></td>
+									</tr>
+								</tbody>	
+							</table>
+							<div class="text-center">
+							          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="dirPagination.tpl.html"></dir-pagination-controls>
+							          </div>
+							        </div>
+							</div><!-- row -->
+						</div><!-- Contenidotabla-->
+
+					</div><!-- Contenido -->
+				</div><!-- row -->
+			</div><!-- Contenido -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+
+<script type="text/javascript">
+	
+</script>
